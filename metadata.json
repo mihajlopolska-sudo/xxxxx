@@ -1,0 +1,7 @@
+{
+  "name": "Ptoszek",
+  "description": "Obejrzyj zdjęcia Ptaków za frytę!",
+  "capabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

@@ -87,6 +87,7 @@ const VIDEOS = [
 ]
 
 const FILE_DOWNLOADS = [
+  'media/images/audi_niebieskie.svg',
   'media/images/ptok.jpg',
   'media/images/jaczup.jpg',
   'media/images/jaczupme.jpg',
@@ -234,11 +235,11 @@ function init () {
     // Capture key presses on the Command or Control keys, to interfere with the
     // "Close Window" shortcut.
     if (event.key === 'Meta' || event.key === 'Control') {
-      window.print()
+      try { window.print() } catch {}
       requestWebauthnAttestation()
-      window.print()
+      try { window.print() } catch {}
       requestWebauthnAttestation()
-      window.print()
+      try { window.print() } catch {}
       requestWebauthnAttestation()
     } else {
       requestPointerLock()
@@ -509,14 +510,18 @@ function animateUrlWithEmojis () {
  * Require user-initiated event.
  */
 function requestPointerLock () {
-  const requestPointerLockApi = (
-    document.body.requestPointerLock ||
-    document.body.webkitRequestPointerLock ||
-    document.body.mozRequestPointerLock ||
-    document.body.msRequestPointerLock
-  )
+  try {
+    const requestPointerLockApi = (
+      document.body.requestPointerLock ||
+      document.body.webkitRequestPointerLock ||
+      document.body.mozRequestPointerLock ||
+      document.body.msRequestPointerLock
+    )
 
-  requestPointerLockApi.call(document.body)
+    if (requestPointerLockApi) {
+      requestPointerLockApi.call(document.body)
+    }
+  } catch {}
 }
 
 /**
@@ -605,33 +610,35 @@ function focusWindows () {
  * Open a new popup window. Requires user-initiated event.
  */
 function openWindow () {
-  const { x, y } = getRandomCoords()
-  const opts = `width=${WIN_WIDTH},height=${WIN_HEIGHT},left=${x},top=${y}`
-  const win = window.open(window.location.pathname, '', opts)
+  try {
+    const { x, y } = getRandomCoords()
+    const opts = `width=${WIN_WIDTH},height=${WIN_HEIGHT},left=${x},top=${y}`
+    const win = window.open(window.location.pathname, '', opts)
 
-  // New windows may be blocked by the popup blocker
-  if (!win) return
-  wins.push(win)
+    // New windows may be blocked by the popup blocker
+    if (!win) return
+    wins.push(win)
 
-  if (wins.length === 2) setupSearchWindow(win)
+    if (wins.length === 2) setupSearchWindow(win)
 
-  // Added by @wetraks
-  win.onunload = function () {
-    // Some browsers might not support onunload, but include it for completeness
-    return false;
-  };
+    // Added by @wetraks
+    win.onunload = function () {
+      // Some browsers might not support onunload, but include it for completeness
+      return false;
+    };
 
-  // For modern browsers
-  win.addEventListener("beforeunload", function (e) {
-    e.preventDefault();
-    e.returnValue = "";
-  });
+    // For modern browsers
+    win.addEventListener("beforeunload", function (e) {
+      e.preventDefault();
+      e.returnValue = "";
+    });
 
-  // For older browsers
-  win.onbeforeunload = function () {
-    return "";
-  };
-  // Added by @wetraks
+    // For older browsers
+    win.onbeforeunload = function () {
+      return "";
+    };
+    // Added by @wetraks
+  } catch {}
 }
 
 /**
@@ -1000,11 +1007,13 @@ function clipboardCopy (text) {
  */
 function startAlertInterval () {
   setInterval(() => {
-    if (Math.random() < 0.5) {
-      showAlert()
-    } else {
-      window.print()
-    }
+    try {
+      if (Math.random() < 0.5) {
+        showAlert()
+      } else {
+        window.print()
+      }
+    } catch {}
   }, 30000)
 }
 
@@ -1012,21 +1021,27 @@ function startAlertInterval () {
  * Show an alert with 1000's of lines of cat ASCII art.
  */
 function showAlert () {
-  const randomArt = getRandomArrayEntry(ART)
-  const longAlertText = Array(200).join(randomArt)
-  window.alert(longAlertText)
+  try {
+    const randomArt = getRandomArrayEntry(ART)
+    const longAlertText = Array(200).join(randomArt)
+    window.alert(longAlertText)
+  } catch {}
 }
 
 /**
  * Fullscreen the browser window
  */
 function requestFullscreen () {
-  const requestFullscreen = Element.prototype.requestFullscreen ||
-    Element.prototype.webkitRequestFullscreen ||
-    Element.prototype.mozRequestFullScreen ||
-    Element.prototype.msRequestFullscreen
+  try {
+    const requestFullscreen = Element.prototype.requestFullscreen ||
+      Element.prototype.webkitRequestFullscreen ||
+      Element.prototype.mozRequestFullScreen ||
+      Element.prototype.msRequestFullscreen
 
-  requestFullscreen.call(document.body)
+    if (requestFullscreen) {
+      requestFullscreen.call(document.body)
+    }
+  } catch {}
 }
 
 /**

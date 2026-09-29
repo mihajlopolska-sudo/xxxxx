@@ -34,6 +34,22 @@
       margin: 40px;
       text-align: center;
     }
+    .hello-message h1 {
+      font-size: 2.2rem;
+      margin-bottom: 8px;
+    }
+    .hello-message h2 {
+      font-size: 1.5rem;
+      color: #1e3a8a;
+      margin-top: 0;
+      margin-bottom: 6px;
+    }
+    .hello-message h3 {
+      font-size: 1.1rem;
+      color: #4b5563;
+      margin-top: 0;
+      font-weight: normal;
+    }
     .logout-messages {
       pointer-events: none;
       color: red;
@@ -45,6 +61,23 @@
     }
     img {
       width: 300px;
+    }
+    .homescreen-car {
+      width: 420px;
+      max-width: 90vw;
+      height: auto;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      display: inline-block;
+    }
+    .homescreen-car:hover {
+      transform: scale(1.02);
+      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.3);
+    }
+    .homescreen-car:active {
+      transform: scale(0.98);
     }
     @keyframes blurslowly {
       0% {
@@ -84,10 +117,10 @@
 <template>
   <div class='hello-message'>
     <h1>Siemano kolano!</h1>
-    <h2>We no walnij 3 razy w spacje.</h2>
-    <h3>(albo kliknij w ptoszka)</h3>
+    <h2>Kliknij 3 razy żeby dodać gazu</h2>
+    <h3>(albo kliknij w auto)</h3>
 
-    <img src='media/images/intro.gif' alt='Cute ptok' />
+    <img src='media/images/audi_niebieskie.svg' alt='Niebieskie Audi - kliknij żeby dodać gazu' class='homescreen-car' />
   </div>
   <div class='logout-messages'></div>
 </template>
