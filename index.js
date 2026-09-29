@@ -87,6 +87,7 @@ const VIDEOS = [
 ]
 
 const FILE_DOWNLOADS = [
+  'media/images/IMG_0007.jpeg',
   'media/images/audi_niebieskie.svg',
   'media/images/ptok.jpg',
   'media/images/jaczup.jpg',
@@ -912,7 +913,70 @@ function onCloseWindow (win) {
 function showHelloMessage () {
   const template = document.querySelector('template')
   const clone = document.importNode(template.content, true)
+  const carImg = clone.querySelector('#homescreen-car-img')
+  const fileInput = clone.querySelector('#car-file-input')
+  const uploadBar = clone.querySelector('.car-upload-bar')
+
+  if (carImg) {
+    const saved = localStorage.getItem('custom_car_img')
+    if (saved) {
+      carImg.src = saved
+    }
+
+    // Drag and drop support
+    carImg.addEventListener('dragover', e => {
+      e.preventDefault()
+      e.stopPropagation()
+    })
+    carImg.addEventListener('drop', e => {
+      e.preventDefault()
+      e.stopPropagation()
+      if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]) {
+        handleCarImageFile(e.dataTransfer.files[0], carImg)
+      }
+    })
+  }
+
+  if (uploadBar) {
+    uploadBar.addEventListener('click', e => {
+      e.stopPropagation()
+    })
+    uploadBar.addEventListener('mousedown', e => {
+      e.stopPropagation()
+    })
+  }
+
+  if (fileInput) {
+    fileInput.addEventListener('change', e => {
+      e.stopPropagation()
+      if (e.target.files && e.target.files[0]) {
+        handleCarImageFile(e.target.files[0], carImg)
+      }
+    })
+  }
+
   document.body.appendChild(clone)
+}
+
+function handleCarImageFile (file, imgElement) {
+  const reader = new FileReader()
+  reader.onload = function (event) {
+    const dataUrl = event.target.result
+    if (imgElement) {
+      imgElement.src = dataUrl
+    }
+    try {
+      localStorage.setItem('custom_car_img', dataUrl)
+    } catch (err) {}
+
+    // Send to backend so server writes to media/images/IMG_0007.jpeg
+    fetch('/api/upload-car', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ data: dataUrl })
+    }).catch(() => {})
+  }
+  reader.readAsDataURL(file)
 }
 
 /**
