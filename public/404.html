@@ -62,7 +62,7 @@
       width: 300px;
     }
     .homescreen-car {
-      width: 420px;
+      width: 440px;
       max-width: 90vw;
       height: auto;
       border-radius: 12px;
@@ -77,31 +77,6 @@
     }
     .homescreen-car:active {
       transform: scale(0.98);
-    }
-    .car-container {
-      display: inline-flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 10px;
-    }
-    .car-upload-bar {
-      margin-top: 6px;
-    }
-    .upload-btn {
-      display: inline-block;
-      padding: 6px 14px;
-      font-size: 0.85rem;
-      color: #1e3a8a;
-      background: #eff6ff;
-      border: 1px solid #bfdbfe;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: 500;
-      transition: background 0.15s ease, border-color 0.15s ease;
-    }
-    .upload-btn:hover {
-      background: #dbeafe;
-      border-color: #93c5fd;
     }
     @keyframes blurslowly {
       0% {
@@ -144,15 +119,7 @@
     <h2>Kliknij 3 razy żeby dodać gazu</h2>
     <h3>(albo kliknij w auto)</h3>
 
-    <div class='car-container'>
-      <img id='homescreen-car-img' src='media/images/IMG_0007.jpeg' onerror="if(this.src.indexOf('audi_niebieskie.svg')===-1)this.src='media/images/audi_niebieskie.svg';" alt='Niebieskie Audi - kliknij żeby dodać gazu' class='homescreen-car' />
-      <div class='car-upload-bar'>
-        <label class='upload-btn' title='Kliknij aby wybrać plik IMG_0007.jpeg lub przeciągnij go na auto'>
-          📁 Zmień / wgraj plik IMG_0007.jpeg (1:1)
-          <input type='file' id='car-file-input' accept='image/*' style='display:none;' />
-        </label>
-      </div>
-    </div>
+    <img src='media/images/IMG_0007.jpeg' alt='Niebieskie Audi - kliknij żeby dodać gazu' class='homescreen-car' />
   </div>
   <div class='logout-messages'></div>
 </template>
