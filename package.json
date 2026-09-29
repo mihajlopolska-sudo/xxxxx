@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "node server.js",
     "start": "node server.js",
-    "build": "echo 'Static app ready'",
+    "build": "mkdir -p public && cp -r index.html index.js 404.html media public/",
     "lint": "node --check server.js && node --check index.js"
   },
   "dependencies": {
